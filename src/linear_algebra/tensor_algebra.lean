@@ -46,7 +46,7 @@ Explicltly, the construction involves three steps:
 -/
 
 variables (R : Type*) [comm_semiring R]
-variables (M : Type*) [add_comm_group M] [semimodule R M]
+variables (M : Type*) [add_comm_monoid M] [semimodule R M]
 
 namespace tensor_algebra
 
@@ -175,6 +175,11 @@ instance : algebra R (tensor_algebra R M) :=
   map_add' := λ _ _, quot.sound rel.add_scalar,
   commutes' := λ _, by { rintros ⟨⟩, exact quot.sound rel.central_scalar },
   smul_def' := λ _ _, rfl }
+
+/-- If the scalars form a commutative ring (not just a commutative semiring) then for general
+reasons, there is a natural ring structure on the tensor algebra. -/
+instance (R M : Type*) [comm_ring R] [add_comm_monoid M] [semimodule R M] :
+  ring (tensor_algebra R M) := algebra.as_ring R (tensor_algebra R M)
 
 /--
 The canonical linear map `M →ₗ[R] tensor_algebra R M`.
