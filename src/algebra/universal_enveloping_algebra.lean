@@ -7,7 +7,7 @@ import algebra.lie_algebra
 import linear_algebra.tensor_algebra
 
 /-!
-# Univeral enveloping algebra
+# Universal enveloping algebra
 
 Given a commutative ring `R` and a Lie algebra `L` over `R`, we construct the universal
 enveloping algebra of `L`, together its universal property.
@@ -103,7 +103,7 @@ def mk_alg_hom : tensor_algebra R L →ₐ[R] universal_enveloping_algebra R L :
   map_add'  := λ a b, rfl,
   commutes' := λ r, show _ = quot.mk _ _, by rw [algebra.smul_def'', mul_one], }
 
-/-- The natural Lie algebra morphism from a Lie to its universal enveloping algebra.
+/-- The natural Lie algebra morphism from a Lie algebra to its universal enveloping algebra.
 
 Note that the Lie algebra structure on the universal enveloping algebra arises from its associative
 algebra structure via the ring commutator. -/
