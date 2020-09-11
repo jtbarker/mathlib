@@ -1,3 +1,5 @@
+#exit
+
 import data.polynomial.funext
 import data.mv_polynomial.variables
 import data.mv_polynomial.rename
