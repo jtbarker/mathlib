@@ -268,7 +268,7 @@ end
 theorem lift_comp_ι {A : Type*} [semiring A] [algebra R A] (g : tensor_algebra R M →ₐ[R] A) :
   lift R M (g.to_linear_map.comp (ι R M)) = g := by {symmetry, rw ←lift_unique}
 
-theorem hom_ext {A : Type*} [semiring A] [algebra R A] {f g : tensor_algebra R M →ₐ[R] A} :
+@[ext] theorem hom_ext {A : Type*} [semiring A] [algebra R A] {f g : tensor_algebra R M →ₐ[R] A} :
   f.to_linear_map.comp (ι R M) = g.to_linear_map.comp (ι R M) → f = g :=
 begin
   intro hyp,

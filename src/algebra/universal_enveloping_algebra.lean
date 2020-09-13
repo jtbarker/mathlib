@@ -19,6 +19,7 @@ enveloping algebra of `L`, together its universal property.
   * `universal_enveloping_algebra.lift`
   * `universal_enveloping_algebra.ι_comp_lift`
   * `universal_enveloping_algebra.lift_unique`
+  * `universal_enveloping_algebra.hom_ext`
 
 ## Implementation notes
 
@@ -138,8 +139,11 @@ def lift : universal_enveloping_algebra R L →ₐ[R] A :=
   map_add'  := by { rintros ⟨⟩ ⟨⟩, change tensor_algebra.lift R L ↑f _ = _, rw alg_hom.map_add, },
   commutes' := λ r, show tensor_algebra.lift R L ↑f _ = _, by simp [algebra.smul_def''], }
 
+@[simp] lemma ι_comp_lift' (x : L) : lift R L A f (ι R L x) = f x :=
+rfl
+
 lemma ι_comp_lift : (lift R L A f) ∘ (ι R L) = f :=
-by { ext, refl, }
+by { ext, simp, }
 
 lemma lift_unique (g : universal_enveloping_algebra R L →ₐ[R] A) (h : g ∘ (ι R L) = f) :
   g = lift R L A f :=
@@ -153,6 +157,17 @@ begin
   have h₂ : φ₂ = tensor_algebra.lift R L f,
     { rw ← tensor_algebra.lift_unique, ext, change _ = f _, rw ← ι_comp_lift R L A f, refl, },
   rw [h₁, h₂],
+end
+
+@[ext] lemma hom_ext {g₁ g₂ : universal_enveloping_algebra R L →ₐ[R] A}
+  (h : g₁ ∘ (ι R L) = g₂ ∘ (ι R L)) : g₁ = g₂ :=
+begin
+  let f₁ := (lie_algebra.of_associative_algebra_hom g₁).comp (ι R L),
+  let f₂ := (lie_algebra.of_associative_algebra_hom g₂).comp (ι R L),
+  have h' : f₁ = f₂, { ext, change (g₁ ∘ (ι R L)) x = (g₂ ∘ (ι R L)) x, rw h, },
+  have h₁ : g₁ = lift R L A f₁, { apply lift_unique, refl, },
+  have h₂ : g₂ = lift R L A f₂, { apply lift_unique, refl, },
+  rw [h₁, h₂, h'],
 end
 
 end universal_enveloping_algebra

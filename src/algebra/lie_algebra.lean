@@ -207,6 +207,12 @@ instance : has_one (L₁ →ₗ⁅R⁆ L₁) := ⟨{ map_lie := by simp, ..(1 : 
 
 instance : inhabited (L₁ →ₗ⁅R⁆ L₂) := ⟨0⟩
 
+@[ext] lemma morphism.ext {f g : L₁ →ₗ⁅R⁆ L₂} (h : ∀ x, f x = g x) : f = g :=
+begin
+  cases f, cases g, simp only,
+  ext, apply h,
+end
+
 /-- The composition of morphisms is a morphism. -/
 def morphism.comp (f : L₂ →ₗ⁅R⁆ L₃) (g : L₁ →ₗ⁅R⁆ L₂) : L₁ →ₗ⁅R⁆ L₃ :=
 { map_lie := λ x y, by { change f (g ⁅x, y⁆) = ⁅f (g x), f (g y)⁆, rw [map_lie, map_lie], },
